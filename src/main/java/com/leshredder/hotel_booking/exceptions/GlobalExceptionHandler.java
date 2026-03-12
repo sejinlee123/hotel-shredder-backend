@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.leshredder.hotel_booking.dtos.Response;
+import com.leshredder.hotel_booking.exceptions.UserAlreadyExistsException;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -44,6 +45,15 @@ public class GlobalExceptionHandler {
             .message(ex.getMessage())
             .build();
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(UserAlreadyExistsException.class)
+    public ResponseEntity<Response> handleUserAlreadyExistsException(UserAlreadyExistsException ex) {
+        Response response = Response.builder()
+            .status(HttpStatus.CONFLICT.value())
+            .message(ex.getMessage())
+            .build();
+        return new ResponseEntity<>(response, HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler(InvalidBookingStateAndDateException.class)

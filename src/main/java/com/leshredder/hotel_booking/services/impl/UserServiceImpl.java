@@ -19,6 +19,7 @@ import com.leshredder.hotel_booking.entities.User;
 import com.leshredder.hotel_booking.enums.UserRole;
 import com.leshredder.hotel_booking.exceptions.InvalidCredentialException;
 import com.leshredder.hotel_booking.exceptions.NotFoundException;
+import com.leshredder.hotel_booking.exceptions.UserAlreadyExistsException;
 import com.leshredder.hotel_booking.repositories.BookingRepository;
 import com.leshredder.hotel_booking.repositories.UserRepository;
 import com.leshredder.hotel_booking.security.JwtUtils;
@@ -41,6 +42,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Response registerUser(RegistrationRequest registrationRequest) {
+        if (userRepository.findByEmail(registrationRequest.getEmail()).isPresent()) {
+            throw new UserAlreadyExistsException("User already exists");
+        }
+
         UserRole role = UserRole.CUSTOMER;
         if (registrationRequest.getRole() != null) {
             role = registrationRequest.getRole();
