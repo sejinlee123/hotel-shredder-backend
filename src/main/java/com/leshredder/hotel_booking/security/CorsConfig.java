@@ -15,14 +15,10 @@ public class CorsConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                    .allowedOrigins(
-                        "http://localhost:8080",
-                        "https://famous-pavlova-881119.netlify.app",
-                        "https://hotelshredder.cv"
-                    )
-                    .allowedMethods("GET", "POST", "PUT", "DELETE")
+                    .allowedOriginPatterns("*")
+                    .allowedMethods("*")
                     .allowedHeaders("*")
-                    .allowCredentials(true);
+                    .allowCredentials(false);
             }
         };
     }
