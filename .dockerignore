@@ -1,0 +1,12 @@
+target
+**/target
+node_modules
+**/node_modules
+.git
+.gitignore
+Dockerfile
+README.md
+*.log
+.vscode
+hotel-app-frontend
+
