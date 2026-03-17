@@ -33,7 +33,7 @@ public class RoomServiceImpl implements RoomService{
     private final RoomRepository roomRepository;
     private final ModelMapper modelMapper;
 
-    private static final String IMAGE_DIRECTORY = System.getProperty("user.dir")  + "/app/data/product-image/";
+    private static final String IMAGE_DIRECTORY = "/app/data/product-image/";
     
     @Override
     public Response addRoom(RoomDTO roomDTO, MultipartFile imageFile) {
