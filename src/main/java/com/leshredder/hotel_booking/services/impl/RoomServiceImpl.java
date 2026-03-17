@@ -1,6 +1,7 @@
 package com.leshredder.hotel_booking.services.impl;
 
 import java.io.File;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -33,7 +34,7 @@ public class RoomServiceImpl implements RoomService{
     private final RoomRepository roomRepository;
     private final ModelMapper modelMapper;
 
-    private static final String IMAGE_DIRECTORY = System.getProperty("user.dir") + "/product-image/";
+    private static final String IMAGE_DIRECTORY = "/data/product-image/";
     
     @Override
     public Response addRoom(RoomDTO roomDTO, MultipartFile imageFile) {
@@ -169,29 +170,26 @@ public class RoomServiceImpl implements RoomService{
     }
 
 
-    private String saveImage(MultipartFile imageFile){
-        if (!imageFile.getContentType().startsWith("image/")){
-            throw new IllegalArgumentException("Only Image files are allowed");
-        }
-
-        File directory = new File(IMAGE_DIRECTORY);
-
-        if (!directory.exists()) {
-            directory.mkdir();
-        }
-
-        String uniqueFileName = UUID.randomUUID() + "_" + imageFile.getOriginalFilename();
-
-        String imagePath = IMAGE_DIRECTORY + uniqueFileName;
-
-        try {
-            File destinationFile = new File(imagePath);
-            imageFile.transferTo(destinationFile);
-        }catch (Exception ex) {
-            throw new IllegalArgumentException(ex.getMessage());
-        }
-
-        return imagePath;
+private String saveImage(MultipartFile imageFile) {
+    if (imageFile == null || imageFile.getContentType() == null || !imageFile.getContentType().startsWith("image/")) {
+        throw new IllegalArgumentException("Only Image Files are allowed");
     }
+
+    File directory = new File(IMAGE_DIRECTORY);
+    if (!directory.exists()) {
+        directory.mkdirs(); 
+    }
+
+    String uniqueFileName = UUID.randomUUID() + "_" + imageFile.getOriginalFilename();
+    String imagePath = IMAGE_DIRECTORY + uniqueFileName;
+
+    try {
+        imageFile.transferTo(new File(imagePath));
+        return "/product-image/" + uniqueFileName;
+    } catch (IOException ex) {
+        throw new InvalidBookingStateAndDateException("Save failed: " + ex.getMessage());
+    }
+}
+    
 
 }
