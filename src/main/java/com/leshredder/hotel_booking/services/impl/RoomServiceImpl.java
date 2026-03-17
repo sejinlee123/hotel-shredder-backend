@@ -33,7 +33,7 @@ public class RoomServiceImpl implements RoomService{
     private final RoomRepository roomRepository;
     private final ModelMapper modelMapper;
 
-    private static final String IMAGE_DIRECTORY = "/app/data/product-image/";
+    private static final String IMAGE_DIRECTORY = System.getProperty("user.dir") + "/product-image/";
     
     @Override
     public Response addRoom(RoomDTO roomDTO, MultipartFile imageFile) {
@@ -170,8 +170,8 @@ public class RoomServiceImpl implements RoomService{
 
 
     private String saveImage(MultipartFile imageFile){
-        if (!imageFile.getContentType().startsWith("image/")) {
-            throw new IllegalArgumentException("Only Image Files are allowed");
+        if (!imageFile.getContentType().startsWith("image/")){
+            throw new IllegalArgumentException("Only Image files are allowed");
         }
 
         File directory = new File(IMAGE_DIRECTORY);
