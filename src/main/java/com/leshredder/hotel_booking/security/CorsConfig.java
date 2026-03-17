@@ -15,7 +15,7 @@ public class CorsConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                    .allowedOriginPatterns("*")
+                    .allowedOrigins("https://hotelshredder.cv", "https://www.hotelshredder.cv")
                     .allowedMethods("*")
                     .allowedHeaders("*")
                     .allowCredentials(false);
