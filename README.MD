@@ -2,6 +2,8 @@
 
 Spring Boot backend for the HotelShredder booking system. Provides REST APIs for authentication, rooms, bookings, payments, and user profiles. Uses PostgreSQL for persistence, JWT for authentication, and Stripe for payments. Deployed on Railway.
 
+**Live site:** [https://hotelshredder.cv](https://hotelshredder.cv/home)
+
 ---
 
 ### What it does
@@ -44,6 +46,5 @@ Spring Boot backend for the HotelShredder booking system. Provides REST APIs for
 
 ---
 
-### License
-
-See `LICENSE` for licensing details.
+## License
+See [LICENSE](LICENSE).
